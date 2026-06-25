@@ -68,7 +68,7 @@ def home():
         if not complaint:
             return render_template('index.html')
 
-        conn = sqlite3.connect('database.db')
+        conn = sqlite3.connect('sample_database.db')
         cursor = conn.cursor()
 
         cursor.execute(
@@ -91,7 +91,7 @@ def dashboard():
     priority = request.args.get('priority', '')
     status = request.args.get('status', '')
 
-    conn = sqlite3.connect('database.db')
+    conn = sqlite3.connect('sample_database.db')
     cursor = conn.cursor()
 
     

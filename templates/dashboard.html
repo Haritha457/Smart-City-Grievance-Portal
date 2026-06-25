@@ -6,6 +6,7 @@
 
     <link rel="stylesheet"
     href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
 
@@ -87,6 +88,18 @@
             </div>
 
             <div class="blue-line"></div>
+            <div class="charts-container">
+
+             <div class="chart-card">
+
+            <h3>Complaint Categories</h3>
+
+             <canvas id="categoryChart"></canvas>
+
+            </div>
+            </div>
+
+
             <form method="GET" action="/dashboard" class="search-form">
 
             <input
@@ -268,6 +281,61 @@
         © 2026 All rights reserved.
 
     </footer>
+    <script>
+
+    const ctx = document.getElementById('categoryChart');
+
+    new Chart(ctx, {
+
+        type: 'pie',
+
+        data: {
+
+        labels: [
+
+            'Electrical',
+
+            'Water Supply',
+
+            'Sanitation',
+
+            'General'
+
+        ],
+
+        datasets: [{
+
+            data: [
+
+                {{ electrical }},
+
+                {{ water }},
+
+                {{ sanitation }},
+
+                {{ general }}
+
+            ],
+
+            backgroundColor: [
+
+                '#2563eb',
+
+                '#06b6d4',
+
+                '#16a34a',
+
+                '#9333ea'
+
+            ]
+
+        }]
+
+    }
+
+});
+
+</script>
 
 </body>
 </html>
