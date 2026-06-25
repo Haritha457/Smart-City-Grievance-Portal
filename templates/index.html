@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart City Grievance Portal</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <div class="logo">
+            🏢 SMART CITY <span>GRIEVANCE PORTAL</span>
+        </div>
+
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="#">About</a></li>
+        </ul>
+
+    </nav>
+
+    <div class="main-container">
+
+        <div class="card">
+
+            <div class="icon-circle">
+                💬
+            </div>
+
+            <h1>Raise a Complaint</h1>
+
+            <p>Help us make our city better</p>
+
+            <div class="line"></div>
+
+            <form method="POST">
+
+                <label>Enter Complaint <span>*</span></label>
+
+                <textarea
+                    name="complaint"
+                    placeholder="Describe your issue here..."
+                    required></textarea>
+
+                <button
+                    class="submit-btn"
+                    type="submit">
+
+                    ✈ Submit Complaint
+
+                </button>
+
+            </form>
+
+            <a href="/dashboard">
+
+                <button
+                    class="dashboard-btn">
+
+                    ⊞ View Dashboard
+
+                </button>
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <footer>
+
+        Smart City Grievance Portal
+
+        <br><br>
+
+        © 2026 All rights reserved.
+
+    </footer>
+
+</body>
+</html>

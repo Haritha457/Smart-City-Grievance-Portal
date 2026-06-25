@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Admin Dashboard</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <div class="logo">
+            🏢 SMART CITY <span>GRIEVANCE PORTAL</span>
+        </div>
+
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="#">About</a></li>
+        </ul>
+
+    </nav>
+
+    <div class="dashboard-wrapper">
+
+        <div class="dashboard-card">
+
+            <div class="dashboard-header">
+                <div class="stats-container">
+
+                 <div class="stat-box">
+                    <h4>Total</h4>
+                    <h2>{{ total }}</h2>
+                </div>
+
+                <div class="stat-box">
+                <h4>Electrical</h4>
+                <h2>{{ electrical }}</h2>
+                </div>
+
+                <div class="stat-box">
+                <h4>Water</h4>
+                 <h2>{{ water }}</h2>
+                </div>
+
+                <div class="stat-box">
+                <h4>Sanitation</h4>
+                <h2>{{ sanitation }}</h2>
+                </div>
+                <div class="stat-box">
+
+                <h4>General</h4>
+
+                <h2>{{ general }}</h2>
+
+                </div>
+
+                <div class="stat-box">
+                <h4>Suspicious</h4>
+                <h2>{{ suspicious }}</h2>
+                </div>
+
+            </div>
+
+                <div>
+
+                    <h1>Complaints Dashboard</h1>
+
+                    <br>
+
+                    <p>     View, track, and manage all submitted complaints</p>
+
+                </div>
+
+                <div class="total-card">
+
+                    <h4>Total Complaints</h4>
+
+                    <h2>{{ complaints|length }}</h2>
+
+                </div>
+
+            </div>
+
+            <div class="blue-line"></div>
+            <form method="GET" action="/dashboard" class="search-form">
+
+            <input
+            type="text"
+            name="search"
+            placeholder="Search complaints..."
+            value="{{ search }}"
+            class="search-input">
+
+            <select name="category" class="filter-select">
+
+            <option value="">All Categories</option>
+
+            <option value="Electrical">Electrical</option>
+
+            <option value="Water Supply">Water Supply</option>
+
+            <option value="Sanitation">Sanitation</option>
+
+            <option value="General">General</option>
+
+            </select>
+
+            <select name="priority" class="filter-select">
+
+            <option value="">All Priorities</option>
+
+            <option value="High">High</option>
+
+            <option value="Medium">Medium</option>
+
+            <option value="Low">Low</option>
+
+            </select>
+
+            <select name="status" class="filter-select">
+
+            <option value="">All Status</option>
+
+            <option value="Pending">Pending</option>
+
+            <option value="In Progress">In Progress</option>
+
+            <option value="Resolved">Resolved</option>
+
+            </select>
+
+            <button type="submit" class="search-btn">
+
+            Search
+
+            </button>
+
+            </form>
+            <br>
+
+            <table>
+
+                <tr>
+
+                    <th>ID</th>
+                    <th>Complaint</th>
+                    <th>Category</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                    <th>Anomaly</th>
+                    <th>Timestamp</th>
+                    <th>Action</th>
+
+                </tr>
+
+                {% for complaint in complaints %}
+
+                <tr>
+
+                    <td>{{ complaint[0] }}</td>
+
+                    <td>{{ complaint[1] }}</td>
+
+                    <td>
+
+                        <span class="category">
+
+                            {{ complaint[2] }}
+
+                        </span>
+
+                    </td>
+
+                    <td>
+
+                        {% if complaint[3] == 'High' %}
+                        <span class="high">
+                            {{ complaint[3] }}
+                        </span>
+
+                        {% elif complaint[3] == 'Medium' %}
+                        <span class="medium">
+                            {{ complaint[3] }}
+                        </span>
+
+                        {% else %}
+                        <span class="low">
+                            {{ complaint[3] }}
+                        </span>
+                        {% endif %}
+
+                    </td>
+                    <td>
+
+                    {% if complaint[6] == "Pending" %}
+
+                    <span class="pending">
+                    Pending
+                    </span>
+
+                     {% elif complaint[6] == "In Progress" %}
+
+                    <span class="progress">
+                    In Progress
+                    </span>
+
+                    {% else %}
+
+                    <span class="resolved">
+                    Resolved
+                    </span>
+
+                    {% endif %}
+
+                    </td>
+
+                    <td>
+
+                        {% if complaint[4] == 1 %}
+                        <span class="suspicious">
+                            ⚠ Suspicious
+                        </span>
+
+                        {% else %}
+                        <span class="normal">
+                            ✓ Normal
+                        </span>
+                        {% endif %}
+
+                    </td>
+
+                    <td>{{ complaint[5] }}</td>
+                    <td>
+
+                    <a href="/update_status/{{ complaint[0] }}">
+
+                    <button class="update-btn">
+
+                    Update
+
+                    </button>
+
+                    </a>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <footer>
+
+        Smart City Grievance Portal
+
+        <br><br>
+
+        © 2026 All rights reserved.
+
+    </footer>
+
+</body>
+</html>
