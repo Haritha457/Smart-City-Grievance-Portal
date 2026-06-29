@@ -341,6 +341,69 @@
     }
 
 });
+const statusCtx = document.getElementById('statusChart');
+
+new Chart(statusCtx, {
+
+    type: 'bar',
+
+    data: {
+
+        labels: [
+
+            'Pending',
+
+            'In Progress',
+
+            'Resolved'
+
+        ],
+
+        datasets: [{
+
+            label: 'Number of Complaints',
+
+            data: [
+
+                {{ pending }},
+
+                {{ in_progress }},
+
+                {{ resolved }}
+
+            ],
+
+            backgroundColor: [
+
+                '#facc15',
+
+                '#3b82f6',
+
+                '#22c55e'
+
+            ]
+
+        }]
+
+    },
+
+    options: {
+
+        responsive: true,
+
+        scales: {
+
+            y: {
+
+                beginAtZero: true
+
+            }
+
+        }
+
+    }
+
+});
 
 </script>
 
