@@ -35,7 +35,7 @@ def detect_anomaly(text):
 
     return 0  
 
-@app.route('/', methods=['GET', 'POST'])
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
 
@@ -44,13 +44,26 @@ def login():
         username = request.form['username']
         password = request.form['password']
 
-        if username == "admin" and password == "admin123":
+        conn = sqlite3.connect('sample_database.db')
+        cursor = conn.cursor()
 
-            session['logged_in'] = True
+        cursor.execute(
+        "SELECT * FROM admins WHERE username=? AND password=?",
+        (username, password)
+        )
 
+        admin = cursor.fetchone()
+
+        conn.close()
+
+        if admin:
+            session['admin'] = True
             return redirect('/dashboard')
 
+        return redirect('/login')
+
     return render_template('login.html')
+@app.route('/', methods=['GET', 'POST'])
 def home():
 
     if request.method == 'POST':
