@@ -411,19 +411,21 @@ td{
     border-bottom:1px solid #eee;
 }
 
-.category{
-
-    background:#eaf1ff;
-
-    color:#2d6cff;
-
-    padding:7px 12px;
-
-    border-radius:20px;
-
-    font-size:14px;
-
-    font-weight:bold;
+.category {
+    background: #e8efff;
+    color: #2563eb;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 140px;
+    height: 38px;
+    box-sizing: border-box;
+}
+td:nth-child(3) {
+    width: 150px;
 }
 
 .high{
