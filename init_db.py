@@ -1,12 +1,6 @@
 import sqlite3
-
-# Connect to (or create) the database file
 conn = sqlite3.connect('sample_database.db')
-
-# Create a cursor - this lets us run SQL commands
 cursor = conn.cursor()
-
-# Create the complaints table if it doesn't already exist
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS complaints (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -17,6 +11,18 @@ cursor.execute('''
         timestamp TEXT DEFAULT CURRENT_TIMESTAMP
     )
 ''')
+cursor.execute('''
+CREATE TABLE IF NOT EXISTS admins (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    username TEXT UNIQUE NOT NULL,
+    password TEXT NOT NULL
+)
+''')
+
+cursor.execute("""
+INSERT OR IGNORE INTO admins (username, password)
+VALUES (?, ?)
+""", ("admin", "admin123"))
 
 conn.commit()
 conn.close()
