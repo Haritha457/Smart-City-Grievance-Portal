@@ -160,6 +160,29 @@ def dashboard():
         """
     )
     suspicious = cursor.fetchone()[0]
+    cursor.execute(
+        """
+        SELECT COUNT(*) FROM complaints
+        WHERE status='Pending'
+        """
+    )
+    pending = cursor.fetchone()[0]
+
+    cursor.execute(
+        """
+        SELECT COUNT(*) FROM complaints
+        WHERE status='In Progress'
+        """
+    )
+    in_progress = cursor.fetchone()[0]
+
+    cursor.execute(
+        """
+        SELECT COUNT(*) FROM complaints
+        WHERE status='Resolved'
+        """
+        )
+    resolved = cursor.fetchone()[0]
 
     conn.close()
 
@@ -173,7 +196,10 @@ def dashboard():
         general=general,
         suspicious=suspicious,
         search=search,
-        category=category
+        category=category,
+        pending=pending,
+        in_progress=in_progress,
+        resolved=resolved,
     )
 if __name__ == '__main__':
     app.run(debug=True)
