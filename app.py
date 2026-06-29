@@ -183,6 +183,29 @@ def dashboard():
         """
         )
     resolved = cursor.fetchone()[0]
+    cursor.execute(
+        """
+        SELECT COUNT(*) FROM complaints
+        WHERE priority='High'
+        """
+        )
+    high_priority = cursor.fetchone()[0]
+
+    cursor.execute(
+        """
+        SELECT COUNT(*) FROM complaints
+        WHERE priority='Medium'
+        """
+        )
+    medium_priority = cursor.fetchone()[0]
+
+    cursor.execute(
+        """
+        SELECT COUNT(*) FROM complaints
+        WHERE priority='Low'
+        """
+        )
+    low_priority = cursor.fetchone()[0]
 
     conn.close()
 
@@ -200,6 +223,48 @@ def dashboard():
         pending=pending,
         in_progress=in_progress,
         resolved=resolved,
+        high_priority=high_priority,
+        medium_priority=medium_priority,
+        low_priority=low_priority
     )
+@app.route('/update_status/<int:complaint_id>')
+def update_status(complaint_id):
+
+    conn = sqlite3.connect('sample_database.db')
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """
+        SELECT status
+        FROM complaints
+        WHERE id=?
+        """,
+        (complaint_id,)
+    )
+
+    current_status = cursor.fetchone()[0]
+
+    if current_status == "Pending":
+        new_status = "In Progress"
+
+    elif current_status == "In Progress":
+        new_status = "Resolved"
+
+    else:
+        new_status = "Pending"
+
+    cursor.execute(
+        """
+        UPDATE complaints
+        SET status=?
+        WHERE id=?
+        """,
+        (new_status, complaint_id)
+    )
+
+    conn.commit()
+    conn.close()
+
+    return redirect('/dashboard')
 if __name__ == '__main__':
     app.run(debug=True)

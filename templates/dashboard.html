@@ -7,6 +7,7 @@
     <link rel="stylesheet"
     href="{{ url_for('static', filename='style.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
 
 </head>
 
@@ -293,6 +294,7 @@
     const ctx = document.getElementById('categoryChart');
 
     new Chart(ctx, {
+        plugins: [ChartDataLabels],
 
         type: 'pie',
 
@@ -390,6 +392,21 @@ new Chart(statusCtx, {
     options: {
 
         responsive: true,
+        plugins: 
+        {
+            datalabels:
+            {
+                anchor: 'end',
+                 align: 'top',
+                 font:
+                 {
+                    weight: 'bold',
+                    size: 14
+                 }
+            }
+
+        },
+    
 
         scales: {
 
