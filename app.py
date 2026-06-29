@@ -93,14 +93,13 @@ def home():
 @app.route('/logout')
 def logout():
 
-    session.pop('logged_in', None)
+    session.pop('admin', None)
 
     return redirect('/login')
 @app.route('/dashboard')
 def dashboard():
-    if 'logged_in' not in session:
+    if 'admin' not in session:
         return redirect('/login')
-
     search = request.args.get('search', '')
     category = request.args.get('category', '')
     priority = request.args.get('priority', '')
