@@ -1,8 +1,9 @@
 import sqlite3
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, session
 import pickle
 
 app = Flask(__name__)
+app.secret_key = 'your_secret_key'  # Replace with a real secret key
 with open("model/complaint_classifier.pkl", "rb") as file:
     ml_model = pickle.load(file)
 def classify_complaint(text):
@@ -35,6 +36,21 @@ def detect_anomaly(text):
     return 0  
 
 @app.route('/', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+
+    if request.method == 'POST':
+
+        username = request.form['username']
+        password = request.form['password']
+
+        if username == "admin" and password == "admin123":
+
+            session['logged_in'] = True
+
+            return redirect('/dashboard')
+
+    return render_template('login.html')
 def home():
 
     if request.method == 'POST':
@@ -61,8 +77,16 @@ def home():
         print(complaint)
 
     return render_template('index.html')
+@app.route('/logout')
+def logout():
+
+    session.pop('logged_in', None)
+
+    return redirect('/login')
 @app.route('/dashboard')
 def dashboard():
+    if 'logged_in' not in session:
+        return redirect('/login')
 
     search = request.args.get('search', '')
     category = request.args.get('category', '')
