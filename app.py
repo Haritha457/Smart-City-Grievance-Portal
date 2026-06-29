@@ -1,49 +1,27 @@
 import sqlite3
 from flask import Flask, render_template, request, redirect
+import pickle
 
 app = Flask(__name__)
+with open("model/complaint_classifier.pkl", "rb") as file:
+    ml_model = pickle.load(file)
 def classify_complaint(text):
 
-    text = text.lower()
+    category = ml_model.predict([text])[0]
 
-    electrical = [
-        "light",
-        "street light",
-        "electricity",
-        "power",
-        "power cut",
-        "current"
-    ]
+    if category == "Electrical":
+        priority = "Medium"
 
-    water = [
-        "water",
-        "pipe",
-        "leakage",
-        "tap"
-    ]
+    elif category == "Water Supply":
+        priority = "High"
 
-    sanitation = [
-        "drain",
-        "drainage",
-        "garbage",
-        "waste",
-        "overflow",
-        "overflowing",
-        "mosquito",
-        "sewage"
-    ]
-
-    if any(word in text for word in electrical):
-        return "Electrical", "Medium"
-
-    elif any(word in text for word in water):
-        return "Water Supply", "High"
-
-    elif any(word in text for word in sanitation):
-        return "Sanitation", "High"
+    elif category == "Sanitation":
+        priority = "High"
 
     else:
-        return "General", "Low"
+        priority = "Low"
+
+    return category, priority
 def detect_anomaly(text):
 
     text = text.lower()

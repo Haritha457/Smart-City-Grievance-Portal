@@ -490,6 +490,19 @@ td{
 
     font-weight:bold;
 }
+.pending,
+.progress,
+.resolved,
+.normal,
+.suspicious {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 25px;
+    min-width: 140px;
+    text-align: center;
+    font-weight: 600;
+    white-space: nowrap;
+}
 .pending{
 
     background:#fff3cd;
