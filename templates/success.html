@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Complaint Submitted</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="success-container">
+
+    <div class="success-card">
+
+        <div class="success-icon">
+            ✅
+        </div>
+
+        <h1>Complaint Submitted Successfully</h1>
+
+        <div class="line"></div>
+
+        <p class="subtitle">
+            Thank you for helping us make our city better.
+        </p>
+
+        <h3>Your Tracking ID</h3>
+
+        <div class="tracking-id">
+            {{ tracking_id }}
+        </div>
+        <button class="copy-btn" onclick="copyTrackingID()">
+    📋  Copy Tracking ID
+        </button>
+
+        <p class="save-text">
+            Please save this ID for future tracking.
+        </p>
+
+        <a href="/track" class="track-btn">
+            🔍 Track Complaint
+        </a>
+
+        <a href="/" class="new-btn">
+            ➕ Submit Another Complaint
+        </a>
+
+    </div>
+
+</div>
+<script>
+function copyTrackingID() {
+
+    const trackingID =
+        document.querySelector('.tracking-id').innerText;
+
+    navigator.clipboard.writeText(trackingID);
+
+    alert("Tracking ID copied successfully!");
+}
+</script>
+
+</body>
+</html>

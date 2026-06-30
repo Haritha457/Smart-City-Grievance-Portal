@@ -4,6 +4,7 @@ cursor = conn.cursor()
 cursor.execute('''
     CREATE TABLE IF NOT EXISTS complaints (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
+        tracking_id TEXT UNIQUE,       
         text TEXT NOT NULL,
         category TEXT,
         priority TEXT,

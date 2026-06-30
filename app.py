@@ -1,6 +1,7 @@
 import sqlite3
 from flask import Flask, render_template, request, redirect, session
 import pickle
+import time
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Replace with a real secret key
@@ -67,20 +68,32 @@ def login():
 def home():
 
     if request.method == 'POST':
+
         complaint = request.form['complaint'].strip()
-        category, priority= classify_complaint(complaint)
+
         is_anomaly = detect_anomaly(complaint)
 
-        
+        if is_anomaly:
+            category = "General"
+            priority = "Low"
+        else:
+            category, priority = classify_complaint(complaint)
+
         if not complaint:
             return render_template('index.html')
 
         conn = sqlite3.connect('sample_database.db')
         cursor = conn.cursor()
 
+        tracking_id = "SCG" + str(int(time.time()))
+
         cursor.execute(
-            "INSERT INTO complaints (text,category,priority, is_anomaly) VALUES (?,?,?,?)",
-            (complaint,category,priority,is_anomaly)
+            """
+            INSERT INTO complaints
+            (tracking_id, text, category, priority, is_anomaly)
+            VALUES (?, ?, ?, ?, ?)
+            """,
+            (tracking_id, complaint, category, priority, is_anomaly)
         )
 
         conn.commit()
@@ -89,7 +102,47 @@ def home():
         print("Complaint saved to database:")
         print(complaint)
 
+        return render_template(
+            'success.html',
+            tracking_id=tracking_id
+        )
+
     return render_template('index.html')
+@app.route('/track', methods=['GET', 'POST'])
+def track():
+
+    complaint = None
+
+    if request.method == 'POST':
+
+        tracking_id = request.form['tracking_id']
+
+        conn = sqlite3.connect('sample_database.db')
+        cursor = conn.cursor()
+
+        cursor.execute(
+            """
+            SELECT tracking_id,
+                   text,
+                   category,
+                   priority,
+                   status,
+                   is_anomaly,
+                   timestamp
+            FROM complaints
+            WHERE tracking_id=?
+            """,
+            (tracking_id,)
+        )
+
+        complaint = cursor.fetchone()
+
+        conn.close()
+
+    return render_template(
+        'track.html',
+        complaint=complaint
+    )
 @app.route('/logout')
 def logout():
 
@@ -113,8 +166,14 @@ def dashboard():
     params = []
 
     if search:
-      query += " AND text LIKE ?"
-      params.append('%' + search + '%')
+        query += """
+        AND (
+            text LIKE ?
+            OR tracking_id LIKE ?
+        )
+        """
+        params.append('%' + search + '%')
+        params.append('%' + search + '%')
 
     if category:
       query += " AND category=?"

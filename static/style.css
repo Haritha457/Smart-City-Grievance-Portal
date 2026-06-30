@@ -769,3 +769,293 @@ canvas{
 .login-card button:hover {
     background: #1d4ed8;
 }
+.tracking-box{
+    margin-top:20px;
+    background:#e8fff0;
+    border:2px solid #22c55e;
+    border-radius:15px;
+    padding:20px;
+    text-align:center;
+}
+
+.tracking-box h2{
+    color:#2563eb;
+    margin:10px 0;
+}
+.track-btn{
+    display:block;
+    width:100%;
+    margin-top:15px;
+    padding:15px;
+    background:#16a34a;
+    color:white;
+    text-decoration:none;
+    border-radius:10px;
+    text-align:center;
+    font-size:18px;
+    font-weight:bold;
+}
+
+.track-btn:hover{
+    background:#15803d;
+}
+.success-container{
+    width:100%;
+    min-height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background-image:url('/static/city.jpg');
+    background-size:cover;
+    background-position:center;
+}
+
+.success-card{
+    width:420px;
+
+    background:white;
+
+    border-radius:25px;
+
+    padding:20px;
+
+    text-align:center;
+
+    box-shadow:0 10px 40px rgba(0,0,0,0.25);
+}
+
+.success-icon{
+    font-size:70px;
+    margin-bottom:20px;
+}
+
+.success-card h1{
+    color:#1e3a8a;
+    font-size:32px;
+    margin-bottom:20px;
+}
+
+.line{
+    width:80px;
+    height:4px;
+    background:#2563eb;
+    margin:20px auto;
+    border-radius:10px;
+}
+
+.subtitle{
+    color:#666;
+    font-size:16px;
+    margin-bottom:30px;
+}
+
+.success-card h3{
+    font-size:22px;
+    margin-bottom:20px;
+}
+
+.tracking-id{
+    background:#f0fff4;
+
+    border:2px solid #22c55e;
+
+    border-radius:15px;
+
+    padding:28px;
+
+    font-size:15px;
+
+    font-weight:bold;
+
+    color:#15803d;
+
+    margin-bottom:25px;
+}
+
+.save-text{
+    color:#555;
+    margin-bottom:30px;
+}
+
+.track-btn{
+    display:block;
+
+    width:100%;
+
+    padding:14px;
+
+    background:#16a34a;
+
+    color:white;
+
+    text-decoration:none;
+
+    border-radius:12px;
+
+    font-size:18px;
+
+    font-weight:bold;
+
+    margin-bottom:20px;
+}
+
+.track-btn:hover{
+    background:#15803d;
+}
+
+.new-btn{
+    display:block;
+    width:100%;
+    padding:14px;
+    border:2px solid #2563eb;
+    color:#2563eb;
+    text-decoration:none;
+    border-radius:12px;
+    font-size:18px;
+    font-weight:600;
+    text-align:center;
+}
+
+.new-btn:hover{
+    background:#2563eb;
+    color:white;
+}
+.track-input{
+    width:100%;
+    padding:15px;
+    border-radius:10px;
+    border:1px solid #ccc;
+    margin-bottom:20px;
+    font-size:16px;
+}
+
+.tracking-result{
+    margin-top:30px;
+    text-align:left;
+    background:#f8fafc;
+    padding:20px;
+    border-radius:15px;
+}
+
+.tracking-result p{
+    margin:10px 0;
+}
+.tracking-result{
+    margin-top:25px;
+    padding:20px;
+    background:#f8fafc;
+    border-radius:15px;
+    text-align:left;
+}
+
+.tracking-result h2{
+    text-align:center;
+    color:#1e3a8a;
+    margin-bottom:20px;
+}
+
+.tracking-result p{
+    margin:12px 0;
+    font-size:16px;
+}
+
+.tracking-result strong{
+    color:#2563eb;
+}
+.pending-badge{
+    background:#fff3cd;
+    color:#856404;
+    padding:8px 15px;
+    border-radius:20px;
+    font-weight:bold;
+}
+
+.progress-badge{
+    background:#d1ecf1;
+    color:#0c5460;
+    padding:8px 15px;
+    border-radius:20px;
+    font-weight:bold;
+}
+
+.resolved-badge{
+    background:#d4edda;
+    color:#155724;
+    padding:8px 15px;
+    border-radius:20px;
+    font-weight:bold;
+}
+.normal-badge{
+    background:#d4edda;
+    color:#155724;
+    padding:8px 15px;
+    border-radius:20px;
+    font-weight:bold;
+}
+
+.suspicious-badge{
+    background:#f8d7da;
+    color:#721c24;
+    padding:8px 15px;
+    border-radius:20px;
+    font-weight:bold;
+}
+.copy-btn{
+    width:100%;
+    padding:12px;
+    margin-top:15px;
+    margin-bottom:20px;
+
+    background:#2563eb;
+    color:white;
+
+    border:none;
+    border-radius:10px;
+
+    font-size:16px;
+    font-weight:bold;
+
+    cursor:pointer;
+}
+
+.copy-btn:hover{
+    background:#1d4ed8;
+}
+.timeline{
+    margin:20px 0;
+    text-align:center;
+}
+
+.timeline-step{
+    width:180px;
+    margin:0 auto;
+    padding:10px;
+    border-radius:20px;
+    background:#eceff3;
+    color:#7a7a7a;
+    font-weight:bold;
+    font-size:18px;
+}
+
+.timeline-arrow{
+    font-size:22px;
+    color:#9ca3af;
+    margin:8px 0;
+}
+
+.active{
+    background:#d4edda;
+    color:#155724;
+}
+
+.progress-active{
+    background:#dbeafe;
+    color:#1d4ed8;
+}
+
+.resolved-active{
+    background:#d4edda;
+    color:#15803d;
+}

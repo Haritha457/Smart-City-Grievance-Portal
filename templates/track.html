@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Track Complaint</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="success-container">
+
+    <div class="success-card">
+
+        <h1>Track Complaint</h1>
+
+        <div class="line"></div>
+
+        <form method="POST">
+
+            <input
+                type="text"
+                name="tracking_id"
+                placeholder="Enter Tracking ID"
+                required
+                class="track-input">
+
+            <button type="submit" class="track-btn">
+                🔍 Search
+            </button>
+
+        </form>
+
+        {% if complaint %}
+
+        <div class="tracking-result">
+
+        <h2>Complaint Details</h2>
+
+        <p><strong>Tracking ID:</strong> {{ complaint[0] }}</p>
+
+        <p><strong>Complaint:</strong> {{ complaint[1] }}</p>
+
+        <p><strong>Category:</strong> {{ complaint[2] }}</p>
+
+        <p><strong>Priority:</strong> {{ complaint[3] }}</p>
+
+        <p>
+        <strong>Status:</strong>
+
+        {% if complaint[4] == 'Pending' %}
+            <span class="pending-badge">Pending</span>
+
+        {% elif complaint[4] == 'In Progress' %}
+            <span class="progress-badge">In Progress</span>
+
+        {% else %}
+            <span class="resolved-badge">Resolved</span>
+        {% endif %}
+        </p>
+        <div class="timeline">
+
+        <div class="timeline-step active">
+            ✅ Submitted
+        </div>
+
+        <div class="timeline-arrow">↓</div>
+
+        <div class="timeline-step
+            {% if complaint[4] in ['In Progress', 'Resolved'] %}
+                progress-active
+            {% endif %}
+        ">
+            🔵 In Progress
+        </div>
+
+        <div class="timeline-arrow">↓</div>
+
+        <div class="timeline-step
+            {% if complaint[4] == 'Resolved' %}
+                resolved-active
+            {% endif %}
+        ">
+            🟢 Resolved
+        </div>
+
+        </div>
+
+        <p>
+        <strong>Anomaly:</strong>
+
+        {% if complaint[5] == 1 %}
+            <span class="suspicious-badge">
+                ⚠ Suspicious
+            </span>
+        {% else %}
+            <span class="normal-badge">
+                ✓ Normal
+            </span>
+        {% endif %}
+        </p>
+        <p><strong>Submitted On:</strong> {{ complaint[6] }}</p>
+
+        </div>
+
+
+        {% endif %}
+        {% if request.method == 'POST' and not complaint %}
+
+        <div class="tracking-result">
+
+        <h3 style="color:red;">
+        No complaint found for this Tracking ID.
+        </h3>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+</body>
+</html>
