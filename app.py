@@ -1,7 +1,17 @@
+import os
+import psycopg2
 import sqlite3
 from flask import Flask, render_template, request, redirect, session
 import pickle
 import time
+def get_connection():
+    database_url = os.getenv("DATABASE_URL")
+
+    if database_url:
+        return psycopg2.connect(database_url)
+
+    import sqlite3
+    return sqlite3.connect("sample_database.db")
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Replace with a real secret key
@@ -45,11 +55,11 @@ def login():
         username = request.form['username']
         password = request.form['password']
 
-        conn = sqlite3.connect('sample_database.db')
+        conn = get_connection()
         cursor = conn.cursor()
 
         cursor.execute(
-        "SELECT * FROM admins WHERE username=? AND password=?",
+        "SELECT * FROM admins WHERE username=%s AND password=%s",
         (username, password)
         )
 
@@ -82,7 +92,7 @@ def home():
         if not complaint:
             return render_template('index.html')
 
-        conn = sqlite3.connect('sample_database.db')
+        conn = get_connection()
         cursor = conn.cursor()
 
         tracking_id = "SCG" + str(int(time.time()))
@@ -91,7 +101,7 @@ def home():
             """
             INSERT INTO complaints
             (tracking_id, text, category, priority, is_anomaly)
-            VALUES (?, ?, ?, ?, ?)
+            VALUES (%s, %s, %s, %s, %s )
             """,
             (tracking_id, complaint, category, priority, is_anomaly)
         )
@@ -117,7 +127,7 @@ def track():
 
         tracking_id = request.form['tracking_id']
 
-        conn = sqlite3.connect('sample_database.db')
+        conn = get_connection()
         cursor = conn.cursor()
 
         cursor.execute(
@@ -130,7 +140,7 @@ def track():
                    is_anomaly,
                    timestamp
             FROM complaints
-            WHERE tracking_id=?
+            WHERE tracking_id=%s
             """,
             (tracking_id,)
         )
@@ -158,7 +168,7 @@ def dashboard():
     priority = request.args.get('priority', '')
     status = request.args.get('status', '')
 
-    conn = sqlite3.connect('sample_database.db')
+    conn = get_connection()
     cursor = conn.cursor()
 
     
@@ -168,23 +178,23 @@ def dashboard():
     if search:
         query += """
         AND (
-            text LIKE ?
-            OR tracking_id LIKE ?
+            text LIKE %s
+            OR tracking_id LIKE %s
         )
         """
         params.append('%' + search + '%')
         params.append('%' + search + '%')
 
     if category:
-      query += " AND category=?"
+      query += " AND category=%s"
       params.append(category)
 
     if priority:
-      query += " AND priority=?"
+      query += " AND priority=%s"
       params.append(priority)
 
     if status:
-      query += " AND status=?"
+      query += " AND status=%s"
       params.append(status)
 
     cursor.execute(query, params)
@@ -303,14 +313,14 @@ def dashboard():
 @app.route('/update_status/<int:complaint_id>')
 def update_status(complaint_id):
 
-    conn = sqlite3.connect('sample_database.db')
+    conn = get_connection()
     cursor = conn.cursor()
 
     cursor.execute(
         """
         SELECT status
         FROM complaints
-        WHERE id=?
+        WHERE id=%s
         """,
         (complaint_id,)
     )
@@ -329,8 +339,8 @@ def update_status(complaint_id):
     cursor.execute(
         """
         UPDATE complaints
-        SET status=?
-        WHERE id=?
+        SET status=%s
+        WHERE id=%s
         """,
         (new_status, complaint_id)
     )
