@@ -63,31 +63,31 @@ Citizen tracks complaint progress
 ## 📂 Project Structure
 
 ```text
-smart_city_app/
+SMART_CITY_APP/
 │
 ├── app.py
 ├── init_db.py
 ├── requirements.txt
+├── Procfile
 ├── README.md
+├── complaint_dataset.csv
+├── .gitignore
 │
 ├── model/
 │   ├── complaint_classifier.pkl
+│   └── train_model.py
 │
 ├── static/
-│   ├── style.css
-│   └── city.jpg
+│   ├── city.jpg
+│   └── style.css
 │
 ├── templates/
+│   ├── dashboard.html
 │   ├── index.html
-│   ├── success.html
-│   ├── track.html
 │   ├── login.html
-│   └── dashboard.html
-│
-└── .gitignore
+│   ├── success.html
+│   └── track.html
 ```
-
----
 
 ## 📊 Current Functionalities
 
