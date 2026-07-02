@@ -190,86 +190,66 @@
                     <td>{{ complaint[1] }}</td>
 
                     <td>
-
-                        <span class="category">
-
-                            {{ complaint[2] }}
-
-                        </span>
-
+                    <span class="category">
+                    {{ complaint[2] }}
+                    </span>
                     </td>
 
                     <td>
-
-                        {% if complaint[3] == 'High' %}
-                        <span class="high">
-                            {{ complaint[3] }}
-                        </span>
-
-                        {% elif complaint[3] == 'Medium' %}
-                        <span class="medium">
-                            {{ complaint[3] }}
-                        </span>
-
-                        {% else %}
-                        <span class="low">
-                            {{ complaint[3] }}
-                        </span>
-                        {% endif %}
-
+                    {{ complaint[3] }}
                     </td>
+
                     <td>
-
-                    {% if complaint[6] == "Pending" %}
-
-                    <span class="pending">
-                    Pending
+                    {% if complaint[4] == 'High' %}
+                    <span class="high">
+                    {{ complaint[4] }}
                     </span>
 
-                     {% elif complaint[6] == "In Progress" %}
-
-                    <span class="progress">
-                    In Progress
+                    {% elif complaint[4] == 'Medium' %}
+                    <span class="medium">
+                    {{ complaint[4] }}
                     </span>
 
                     {% else %}
+                    <span class="low">
+                    {{ complaint[4] }}
+                    </span>
+                     {% endif %}
+                    </td>
 
-                    <span class="resolved">
-                    Resolved
+                    <td>
+                    {% if complaint[5] == "Pending" %}
+                    <span class="pending">Pending</span>
+
+                    {% elif complaint[5] == "In Progress" %}
+                    <span class="progress">In Progress</span>
+
+                    {% else %}
+                    <span class="resolved">Resolved</span>
+                    {% endif %}
+                    </td>
+
+                    <td>
+                    {% if complaint[6] == 1 %}
+                    <span class="suspicious">
+                    ⚠ Suspicious
                     </span>
 
+                    {% else %}
+                    <span class="normal">
+                    ✓ Normal
+                    </span>
                     {% endif %}
-
                     </td>
 
+                    <td>{{ complaint[7] }}</td>
+
                     <td>
-
-                        {% if complaint[4] == 1 %}
-                        <span class="suspicious">
-                            ⚠ Suspicious
-                        </span>
-
-                        {% else %}
-                        <span class="normal">
-                            ✓ Normal
-                        </span>
-                        {% endif %}
-
-                    </td>
-
-                    <td>{{ complaint[5] }}</td>
-                    <td>
-
                     <a href="/update_status/{{ complaint[0] }}">
-
                     <button class="update-btn">
-
-                    Update
-
+                     Update
                     </button>
-
-                    </a>
-
+                     </a>
                     </td>
 
                 </tr>

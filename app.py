@@ -1,17 +1,17 @@
 import os
 import psycopg2
-import sqlite3
 from flask import Flask, render_template, request, redirect, session
 import pickle
 import time
+
 def get_connection():
     database_url = os.getenv("DATABASE_URL")
 
     if database_url:
         return psycopg2.connect(database_url)
 
-    import sqlite3
-    return sqlite3.connect("sample_database.db")
+    raise Exception("DATABASE_URL environment variable is not set")
+   
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'  # Replace with a real secret key
@@ -303,6 +303,7 @@ def dashboard():
         suspicious=suspicious,
         search=search,
         category=category,
+        status=status,
         pending=pending,
         in_progress=in_progress,
         resolved=resolved,
